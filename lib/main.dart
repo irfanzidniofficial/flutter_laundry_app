@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_laundry_app/config/app_colors.dart';
+import 'package:flutter_laundry_app/pages/auth/register_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -14,16 +16,16 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primaryColor: Colors.green,
+        primaryColor: AppColors.primary,
         scaffoldBackgroundColor: Colors.white,
         colorScheme: ColorScheme.light(
-          primary: Colors.green,
+          primary: AppColors.primary,
           secondary: Colors.greenAccent[400]!,
         ),
         textTheme: GoogleFonts.latoTextTheme(),
         elevatedButtonTheme: const ElevatedButtonThemeData(
           style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(Colors.green),
+            backgroundColor: MaterialStatePropertyAll(AppColors.primary),
             shape: MaterialStatePropertyAll(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(
@@ -45,6 +47,7 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+      home: const RegisterPage(),
     );
   }
 }
