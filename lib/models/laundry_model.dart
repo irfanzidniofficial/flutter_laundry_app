@@ -6,7 +6,7 @@ class LaundryModel {
   String claimCode;
   String userId;
   String shopId;
-  String weight;
+  double weight;
   bool withPickup;
   bool withDelivery;
   String pickupAddress;
@@ -47,7 +47,7 @@ class LaundryModel {
         withPickup: json["with_pickup"] == 1,
         withDelivery: json["with_delivery"] == 1,
         pickupAddress: json["pickup_address"],
-        deliveryAddress: json["delivery_address"],
+        deliveryAddress: json["delivery_address"] ,
         total: json["total"],
         description: json["description"],
         status: json["status"],
