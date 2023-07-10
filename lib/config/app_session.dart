@@ -38,11 +38,9 @@ class AppSession {
     return UserModel.fromJson(userMap);
   }
 
-  static Future<bool> setBearerToken(Map userMap) async {
+  static Future<bool> setBearerToken(String bearerToken) async {
     final pref = await SharedPreferences.getInstance();
-
-    String userString = jsonEncode(userMap);
-    bool success = await pref.setString('bearer_token', userString);
+    bool success = await pref.setString('bearer_token', bearerToken);
     return success;
   }
 
