@@ -34,7 +34,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     bool validInput = formKey.currentState!.validate();
     if (!validInput) return;
     setLoginStatus(ref, 'Loading');
-    UserDataSource.login(
+    UserDatasource.login(
       edtEmail.text,
       edtPassword.text,
     ).then((value) {

@@ -28,14 +28,10 @@ class AppSession {
     return success;
   }
 
-  static Future<UserModel?> getBearerToken() async {
+  static Future<String?> getBearerToken() async {
     final pref = await SharedPreferences.getInstance();
-
-    String? userString = pref.getString('bearer_token');
-    if (userString == null) return null;
-
-    var userMap = jsonDecode(userString);
-    return UserModel.fromJson(userMap);
+    String? token = pref.getString('bearer_token');
+    return token;
   }
 
   static Future<bool> setBearerToken(String bearerToken) async {

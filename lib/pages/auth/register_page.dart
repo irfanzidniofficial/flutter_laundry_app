@@ -30,7 +30,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
     bool validInput = formKey.currentState!.validate();
     if (!validInput) return;
     setRegisterStatus(ref, 'Loading');
-    UserDataSource.register(
+    UserDatasource.register(
       edtUsername.text,
       edtEmail.text,
       edtPassword.text,

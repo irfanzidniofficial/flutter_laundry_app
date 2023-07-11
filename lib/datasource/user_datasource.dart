@@ -5,10 +5,8 @@ import 'package:flutter_laundry_app/config/app_respone.dart';
 import 'package:flutter_laundry_app/config/failure.dart';
 import 'package:http/http.dart' as http;
 
-class UserDataSource {
-
+class UserDatasource {
   static Future<Either<Failure, Map>> login(
-  
     String email,
     String password,
   ) async {
@@ -18,7 +16,6 @@ class UserDataSource {
         url,
         headers: AppRequest.header(),
         body: {
-       
           'email': email,
           'password': password,
         },
@@ -32,8 +29,6 @@ class UserDataSource {
       return Left(FetchFailure(e.toString()));
     }
   }
-
-
 
   static Future<Either<Failure, Map>> register(
     String username,

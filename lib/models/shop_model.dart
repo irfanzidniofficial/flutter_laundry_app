@@ -39,8 +39,10 @@ class ShopModel {
         pickup: json["pickup"] == 1,
         whatsapp: json["whatsapp"],
         description: json["description"],
-        price: json["price"],
-        rate: json["rate"],
+        // price: json["price"]?.toDouble(), // error
+        price: double.tryParse(json["price"]) ?? 0.0,
+        // rate: json["rate"]?.toDouble(),
+        rate: double.tryParse(json["rate"]) ?? 0.0,
         createdAt: DateTime.parse(json["created_at"]).toLocal(),
         updatedAt: DateTime.parse(json["updated_at"]).toLocal(),
       );

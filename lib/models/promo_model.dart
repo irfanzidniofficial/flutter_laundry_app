@@ -27,8 +27,10 @@ class PromoModel {
         id: json["id"],
         image: json["image"],
         shopId: json["shop_id"],
-        oldPrice: json["old_price"],
-        newPrice: json["new_price"],
+        // oldPrice: json["old_price"]?.toDouble(), // error
+        oldPrice: double.tryParse(json["old_price"]) ?? 0.0,
+        // newPrice: json["new_price"]?.toDouble(), // error
+        newPrice: double.tryParse(json["new_price"]) ?? 0.0,
         description: json["description"],
         createdAt: DateTime.parse(json["created_at"]).toLocal(),
         updatedAt: DateTime.parse(json["updated_at"]).toLocal(),
