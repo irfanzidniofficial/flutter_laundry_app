@@ -1,7 +1,7 @@
-import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_laundry_app/pages/dashboard_view/account_view.dart';
 import 'package:flutter_laundry_app/pages/dashboard_view/home_view.dart';
+import 'package:flutter_laundry_app/pages/dashboard_view/my_laundry_view.dart';
 
 class AppConstants {
   static const appName = "Di Laundry";
@@ -32,7 +32,7 @@ class AppConstants {
       'label': "Home",
     },
     {
-      'view': DView.empty('My Laundry'),
+      'view': const MyLaundyView(),
       'icon': Icons.local_laundry_service,
       'label': "My Laundry",
     },

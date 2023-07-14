@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_laundry_app/config/app_assets.dart';
 import 'package:flutter_laundry_app/config/app_colors.dart';
 import 'package:flutter_laundry_app/config/app_constants.dart';
 import 'package:flutter_laundry_app/config/app_format.dart';
@@ -9,12 +8,32 @@ import 'package:flutter_laundry_app/config/app_format.dart';
 import 'package:flutter_laundry_app/models/shop_model.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../config/app_assets.dart';
+
 class DetailShopPage extends StatelessWidget {
   const DetailShopPage({
     Key? key,
     required this.shop,
   }) : super(key: key);
   final ShopModel shop;
+
+  // launchWA(BuildContext context, String number) async {
+  //   bool? yes = await DInfo.dialogConfirmation(
+  //     context,
+  //     'Chat via whatsapp',
+  //     'Yes to confirm',
+  //   );
+  //   if (yes ?? false) {
+  //     const link = WhatsAppUnilink(
+  //       //  phoneNumber: number, // error dikarenakan data dari BE tidak valid no hpnya
+  //       phoneNumber: '62085893124302',
+  //       text: 'Hello, i want to order a laundry services',
+  //     );
+  //     if (await canLaunchUrl(link.asUri())) {
+  //       launchUrl(link.asUri(), mode: LaunchMode.externalApplication);
+  //     }
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +43,7 @@ class DetailShopPage extends StatelessWidget {
         children: [
           headerImage(context),
           DView.spaceHeight(10),
-          groupItemInfo(),
+          groupItemInfo(context),
           DView.spaceHeight(20),
           category(),
           description(),
@@ -108,7 +127,7 @@ class DetailShopPage extends StatelessWidget {
     );
   }
 
-  Padding groupItemInfo() {
+  Padding groupItemInfo(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 26),
       child: Row(
