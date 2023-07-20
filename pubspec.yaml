@@ -49,6 +49,7 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   url_launcher: ^6.1.12
   whatsapp_unilink: ^2.1.0
+  grouped_list: ^5.1.2
 
 dev_dependencies:
   flutter_test:
