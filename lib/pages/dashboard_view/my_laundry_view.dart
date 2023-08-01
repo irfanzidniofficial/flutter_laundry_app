@@ -1,3 +1,4 @@
+import 'package:d_info/d_info.dart';
 import 'package:d_input/d_input.dart';
 import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +73,7 @@ class _MyLaundyViewState extends ConsumerState<MyLaundyView> {
         return Form(
           child: SimpleDialog(
             titlePadding: const EdgeInsets.all(16),
-            contentPadding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+            contentPadding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
             children: [
               DInput(
                 controller: edtLaundryID,
@@ -89,10 +90,11 @@ class _MyLaundyViewState extends ConsumerState<MyLaundyView> {
                 validator: (input) => input == '' ? "Don't empty" : null,
                 inputType: TextInputType.number,
               ),
+              DView.spaceHeight(20),
               ElevatedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
-                    claimNow();
+                    claimNow(edtLaundryID.text, edtClaimCode.text);
                   }
                 },
                 child: const Text("Claim Now"),
@@ -110,14 +112,47 @@ class _MyLaundyViewState extends ConsumerState<MyLaundyView> {
     );
   }
 
-  claimNow() {}
+  claimNow(String id, String claimCode) {
+    LaundryDatasource.claim(id, claimCode).then((value) {
+      value.fold(
+        (failure) {
+          switch (failure.runtimeType) {
+            case ServerFailure:
+              DInfo.toastError('Server Error');
+              break;
+            case NotFoundFailure:
+              DInfo.toastError('Error Not Found');
+              break;
+            case ForbiddenFailure:
+              DInfo.toastError('You don\t have access');
+
+              break;
+            case BadRequestFailure:
+              DInfo.toastError('Bad Request');
+              break;
+            case UnauthorisedFailure:
+              DInfo.toastError('Unauthorized');
+              break;
+            default:
+              DInfo.toastError('Request Error');
+              break;
+          }
+        },
+        (result) {
+          DInfo.toastSuccess('Claim Success');
+          getMyLaundry();
+        },
+      );
+    });
+  }
 
   @override
   void initState() {
     AppSession.getUser().then((value) {
       user = value!;
+      getMyLaundry();
     });
-    getMyLaundry();
+
     super.initState();
   }
 
@@ -132,7 +167,7 @@ class _MyLaundyViewState extends ConsumerState<MyLaundyView> {
             onRefresh: () async => getMyLaundry(),
             child: Consumer(
               builder: (_, wiRef, ___) {
-                String statusList = wiRef.watch(myLaundryCategoryProvider);
+                String statusList = wiRef.watch(myLaundryStatusProvider);
                 String statusCategory = wiRef.watch(myLaundryCategoryProvider);
 
                 List<LaundryModel> listBackup =
@@ -157,7 +192,7 @@ class _MyLaundyViewState extends ConsumerState<MyLaundyView> {
 
                 if (list.isEmpty) {
                   return const Padding(
-                    padding: EdgeInsets.fromLTRB(30, 0, 30, 80),
+                    padding: EdgeInsets.fromLTRB(30, 30, 30, 80),
                     child: ErrorBackground(
                       ratio: 16 / 9,
                       message: 'Empty',
@@ -196,8 +231,9 @@ class _MyLaundyViewState extends ConsumerState<MyLaundyView> {
                   order: GroupedListOrder.DESC,
                   itemBuilder: (context, laundry) {
                     return Container(
+                      margin: const EdgeInsets.only(bottom: 20),
                       decoration: BoxDecoration(
-                        color: Colors.green,
+                        color: Colors.green[50],
                         borderRadius: BorderRadius.circular(10),
                       ),
                       padding: const EdgeInsets.all(12),
