@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_laundry_app/config/app_constants.dart';
 import 'package:flutter_laundry_app/config/app_format.dart';
 import 'package:flutter_laundry_app/config/app_session.dart';
+import 'package:flutter_laundry_app/config/nav.dart';
 import 'package:flutter_laundry_app/datasource/laundry_datasource.dart';
 import 'package:flutter_laundry_app/models/laundry_model.dart';
 import 'package:flutter_laundry_app/models/user_model.dart';
+import 'package:flutter_laundry_app/pages/detail_laundry_page.dart';
 import 'package:flutter_laundry_app/providers/my_laudry_provider.dart';
 import 'package:flutter_laundry_app/widgets/error_background.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -191,11 +193,21 @@ class _MyLaundyViewState extends ConsumerState<MyLaundyView> {
                 }
 
                 if (list.isEmpty) {
-                  return const Padding(
-                    padding: EdgeInsets.fromLTRB(30, 30, 30, 80),
-                    child: ErrorBackground(
-                      ratio: 16 / 9,
-                      message: 'Empty',
+                  return Padding(
+                    padding: const EdgeInsets.fromLTRB(30, 30, 30, 80),
+                    child: Stack(
+                      children: [
+                        const ErrorBackground(
+                          ratio: 16 / 9,
+                          message: 'Empty',
+                        ),
+                        IconButton(
+                            onPressed: () => getMyLaundry(),
+                            icon: const Icon(
+                              Icons.refresh,
+                              color: Colors.white,
+                            ))
+                      ],
                     ),
                   );
                 }
@@ -230,94 +242,100 @@ class _MyLaundyViewState extends ConsumerState<MyLaundyView> {
                   groupBy: (element) => AppFormat.justDate(element.createdAt),
                   order: GroupedListOrder.DESC,
                   itemBuilder: (context, laundry) {
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.green[50],
-                        borderRadius: BorderRadius.circular(10),
+                    return GestureDetector(
+                      onTap: () => Nav.push(
+                        context,
+                        DetailLaundryPage(laundry: laundry),
                       ),
-                      padding: const EdgeInsets.all(12),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  laundry.shop.name,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.green[50],
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    laundry.shop.name,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                ),
+                                DView.spaceWidth(),
+                                Text(
+                                  AppFormat.longPrice(
+                                    laundry.total,
+                                  ),
+                                  textAlign: TextAlign.end,
                                   style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
+                                    fontWeight: FontWeight.w500,
                                     fontSize: 18,
                                   ),
                                 ),
-                              ),
-                              DView.spaceWidth(),
-                              Text(
-                                AppFormat.longPrice(
-                                  laundry.total,
-                                ),
-                                textAlign: TextAlign.end,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ],
-                          ),
-                          DView.spaceHeight(12),
-                          Row(
-                            children: [
-                              if (laundry.withPickup)
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(4),
+                              ],
+                            ),
+                            DView.spaceHeight(12),
+                            Row(
+                              children: [
+                                if (laundry.withPickup)
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    margin: const EdgeInsets.only(right: 8),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 4,
+                                    ),
+                                    child: const Text(
+                                      'Pickup',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        height: 1,
+                                      ),
+                                    ),
                                   ),
-                                  margin: const EdgeInsets.only(right: 8),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 4,
+                                if (laundry.withDelivery)
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    margin: const EdgeInsets.only(right: 8),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                      vertical: 4,
+                                    ),
+                                    child: const Text(
+                                      'Delivery',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        height: 1,
+                                      ),
+                                    ),
                                   ),
-                                  child: const Text(
-                                    'Pickup',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      height: 1,
+                                Expanded(
+                                  child: Text(
+                                    '${laundry.weight}kg',
+                                    textAlign: TextAlign.end,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w300,
                                     ),
                                   ),
                                 ),
-                              if (laundry.withDelivery)
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  margin: const EdgeInsets.only(right: 8),
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 10,
-                                    vertical: 4,
-                                  ),
-                                  child: const Text(
-                                    'Delivery',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      height: 1,
-                                    ),
-                                  ),
-                                ),
-                              Expanded(
-                                child: Text(
-                                  '${laundry.weight}kg',
-                                  textAlign: TextAlign.end,
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     );
                   },

@@ -10,7 +10,7 @@ class Nav {
     );
   }
 
-   static replace(BuildContext context, Widget page) {
+  static replace(BuildContext context, Widget page) {
     return Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -18,5 +18,4 @@ class Nav {
       ),
     );
   }
-
 }
