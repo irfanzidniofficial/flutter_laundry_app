@@ -4,7 +4,7 @@ import 'package:flutter_laundry_app/pages/dashboard_view/home_view.dart';
 import 'package:flutter_laundry_app/pages/dashboard_view/my_laundry_view.dart';
 
 class AppConstants {
-  static const appName = "Di Laundry";
+  static const appName = "Location Laundry";
 
   static const _host = 'https://irfanzidni.com/laundry/public';
 

@@ -96,8 +96,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         fit: StackFit.expand,
         children: [
           Image.asset(
-            AppAssets.bgAuth,
-            fit: BoxFit.cover,
+            AppAssets.logo,
+            fit: BoxFit.fitWidth,
           ),
           Align(
             alignment: Alignment.bottomCenter,
@@ -129,17 +129,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       Text(
                         AppConstants.appName,
                         style: GoogleFonts.poppins(
-                          fontSize: 40,
+                          fontSize: 35,
                           fontWeight: FontWeight.w500,
-                          color: Colors.green[900],
-                        ),
-                      ),
-                      Container(
-                        height: 5,
-                        width: 40,
-                        decoration: BoxDecoration(
-                          color: AppColors.primary.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(30),
+                          color: Colors.blue[900],
                         ),
                       ),
                     ],
@@ -162,7 +154,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 borderRadius: BorderRadius.circular(10),
                                 child: const Icon(
                                   Icons.email,
-                                  color: Colors.green,
+                                  color: Colors.blueAccent,
                                 ),
                               ),
                             ),
@@ -194,7 +186,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 borderRadius: BorderRadius.circular(10),
                                 child: const Icon(
                                   Icons.key,
-                                  color: Colors.green,
+                                  color: Colors.blueAccent,
                                 ),
                               ),
                             ),
@@ -231,7 +223,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                 child: const Text(
                                   'REG',
                                   style: TextStyle(
-                                    color: Colors.green,
+                                    color: Colors.blueAccent,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),

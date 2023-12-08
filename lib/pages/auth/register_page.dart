@@ -90,8 +90,8 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
         fit: StackFit.expand,
         children: [
           Image.asset(
-            AppAssets.bgAuth,
-            fit: BoxFit.cover,
+            AppAssets.logo,
+            fit: BoxFit.fitWidth,
           ),
           Align(
             alignment: Alignment.bottomCenter,
@@ -123,9 +123,9 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                       Text(
                         AppConstants.appName,
                         style: GoogleFonts.poppins(
-                          fontSize: 40,
+                          fontSize: 35,
                           fontWeight: FontWeight.w500,
-                          color: Colors.green[900],
+                          color: Colors.blue[900],
                         ),
                       ),
                       Container(
@@ -153,7 +153,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                 borderRadius: BorderRadius.circular(10),
                                 child: const Icon(
                                   Icons.person,
-                                  color: Colors.green,
+                                  color: Colors.blueAccent,
                                 ),
                               ),
                             ),
@@ -185,7 +185,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                 borderRadius: BorderRadius.circular(10),
                                 child: const Icon(
                                   Icons.email,
-                                  color: Colors.green,
+                                  color: Colors.blue,
                                 ),
                               ),
                             ),
@@ -217,7 +217,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                 borderRadius: BorderRadius.circular(10),
                                 child: const Icon(
                                   Icons.key,
-                                  color: Colors.green,
+                                  color: Colors.blueAccent,
                                 ),
                               ),
                             ),
@@ -254,7 +254,7 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
                                 child: const Text(
                                   'LOG',
                                   style: TextStyle(
-                                    color: Colors.green,
+                                    color: Colors.blue,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
